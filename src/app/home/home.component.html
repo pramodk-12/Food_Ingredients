@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="filterId" style="margin-top: 10px;">
+        <mat-form-field appearance="fill">
+            <mat-label>Filter By</mat-label>
+            <mat-select (selectionChange)="onSelectionChange($event)" [formControl]="selectedOption">
+              <mat-option *ngFor="let option of dropdownOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="loading-bar" *ngIf = "loader" >
+        <div>
+          <p class="card-text" >Loading..</p>
+          <i class="fa fa-spinner rotation-animation" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div *ngIf = "selectedOption.value === 'c' && loader === false" >
+        
+        <div class="carddiv" *ngIf = "((categoryList$ | async))" >
+            <div class="card-grid" >
+                <div *ngFor = 'let category of categoryList$ | async' >
+                    <mat-card (click)="filterList('c',category.strCategory)" [ngClass]="category.strCategory === selectedList ? 'mat-card-style mat-card-style-select' : 'mat-card-style'" >
+                      <mat-card-content class="mat-content-style" >{{category.strCategory}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+            <div class="card-grid-items" >
+                <div *ngFor = 'let filter of categoryFilter$ | async' >
+                    <mat-card class="mat-card-style-items" >
+                      <img class="mat-image" src="{{filter.strMealThumb}}" alt="">
+                      <mat-card-content class="mat-items-content-style" >{{filter.strMeal}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf = "selectedOption.value === 'a' && loader === false" >
+        <div class="carddiv" *ngIf = "areaList$ | async as areas" >
+            <div class="card-grid"  >
+                <div *ngFor = 'let area of areas' >
+                    <mat-card (click)="filterList('a',area.strArea)" [ngClass]="area.strArea === selectedList ? 'mat-card-style mat-card-style-select' : 'mat-card-style'" >
+                      <mat-card-content class="mat-content-style" >{{area.strArea}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+            <div class="card-grid-items" >
+                <div *ngFor = 'let filter of categoryFilter$ | async' >
+                    <mat-card class="mat-card-style-items" >
+                        <img class="mat-image" src="{{filter.strMealThumb}}" alt="">
+                      <mat-card-content class="mat-items-content-style" >{{filter.strMeal}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf = "selectedOption.value === 'i' && loader === false" >
+        <div class="carddiv" *ngIf = "ingredientList$ | async as ingredients" >
+            <div class="card-grid"  >
+                <div *ngFor = 'let ingredient of ingredients' >
+                    <mat-card (click)="filterList('i',ingredient.strIngredient)" [ngClass]="ingredient.strIngredient === selectedList ? 'mat-card-style mat-card-style-select' : 'mat-card-style'" >
+                      <mat-card-content class="mat-content-style" >{{ingredient.strIngredient}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+            <div class="card-grid-items" >
+                <div *ngFor = 'let filter of categoryFilter$ | async' >
+                    <mat-card class="mat-card-style-items" >
+                        <img class="mat-image" src="{{filter.strMealThumb}}" alt="">
+                      <mat-card-content class="mat-items-content-style" >{{filter.strMeal}}</mat-card-content>
+                    </mat-card>
+              </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
